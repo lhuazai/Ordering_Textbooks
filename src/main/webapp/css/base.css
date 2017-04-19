@@ -1,0 +1,27 @@
+.inline{display: inline;}
+.relative{position: relative}
+.erro{color: red;}
+.w-400{width: 400px}
+.w-1000{ width: 1000px;}
+.w-800{width: 800px;}
+.w-500{width: 500px;}
+.m10{margin: 10px}
+.m5{margin: 5px}
+.m15{margin: 15px}
+.m20{margin: 20px}
+.ml10{margin-left: 10px}
+.ml5{margin-left: 5px}
+.ml15{margin-left: 15px}
+.ml20{margin-left: 20px}
+.mt10{margin-top: 10px}
+.mt5{margin-top: 5px}
+.mt15{margin-top: 15px}
+.mt20{margin-top: 20px}
+.mb10{margin-bottom: 10px}
+.mb5{margin-bottom: 5px}
+.mb15{margin-bottom: 15px}
+.mb20{margin-bottom: 20px}
+.mr10{margin-right: 10px}
+.mr5{margin-right: 5px}
+.mr15{margin-right: 15px}
+.mr20{margin-right: 20px}
