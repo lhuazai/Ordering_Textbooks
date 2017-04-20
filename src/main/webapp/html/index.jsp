@@ -66,7 +66,7 @@
                         <li><a href="#">个人设置</a></li>
                         <li><a href="#">更改密码</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">退出登陆</a></li>
+                        <li><a href="/userLoginout">退出登陆</a></li>
                     </ul>
                 </li>
             </ul>
@@ -84,11 +84,9 @@
 
         </div>
         <div class="content-group">
-            <h1>这里是图书采购系统的首页</h1>
-            <h3>出现此页面，说明登陆成功。</h3>
-            <h3>目前进度：</h3>
-            <h4>主体框架：完成</h4>
-            <h4>角色模块：开发中</h4>
+            <iframe style="width: 100%;height: 100%" src="/users">
+
+            </iframe>
         </div>
 
     </div>

@@ -25,23 +25,40 @@
   <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
   <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <style>
+    .form-group{
+      max-width: 500px;
+    }
+  </style>
 </head>
 <body>
 <div class="container">
-  <h1>SpringMVC 添加用户</h1>
+  <h1>添加用户</h1>
   <hr/>
   <form:form action="/addUserPost" method="post" commandName="user" role="form">
     <div class="form-group">
-      <label for="name">Name:</label>
+      <label for="name">用户名:</label>
       <input type="text" class="form-control" id="name" name="name" placeholder="Enter FirstName:"/>
     </div>
     <div class="form-group">
-      <label for="userName">userName:</label>
+      <label for="userName">登陆账号:</label>
       <input type="text" class="form-control" id="userName" name="userName" placeholder="Enter LastName:"/>
     </div>
     <div class="form-group">
-      <label for="password">Password:</label>
+      <label for="password">密码:</label>
       <input type="text" class="form-control" id="password" name="password" placeholder="Enter Password:"/>
+    </div>
+    <div class="form-group">
+      <label for="sex">性别:</label>
+      <input type="text" class="form-control" id="sex" name="sex" placeholder="Enter Password:"/>
+    </div>
+    <div class="form-group">
+      <label for="email">电子邮箱:</label>
+      <input type="text" class="form-control" id="email" name="email" placeholder="Enter Password:"/>
+    </div>
+    <div class="form-group">
+      <label for="qq">QQ:</label>
+      <input type="text" class="form-control" id="qq" name="qq" placeholder="Enter Password:"/>
     </div>
     <div class="form-group">
       <button type="submit" class="btn btn-sm btn-success">提交</button>

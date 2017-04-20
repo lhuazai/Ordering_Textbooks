@@ -2,6 +2,7 @@ package com.booksys.example.model;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Date;
 
 /**
  * Created by sjj on 2015/10/24 0024.
@@ -13,6 +14,11 @@ public class UserEntity {
     private String name;
     private String userName;
     private String password;
+    private String sex;
+    private String email;
+    private String qq;
+    private Date signupTime;
+    private Date lastSignin;
     private Collection<BlogEntity> blogsById;
 
     @Id
@@ -53,6 +59,56 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+
+    @Basic
+    @Column(name = "SEX",nullable = false,insertable = true,updatable = true,length = 2)
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    @Basic
+    @Column(name = "EMAIL",nullable = false,insertable = true,updatable = true,length = 45)
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Basic
+    @Column(name = "QQ",nullable = false,insertable = true,updatable = true,length = 10)
+    public String getQq() {
+        return qq;
+    }
+
+    public void setQq(String qq) {
+        this.qq = qq;
+    }
+
+    @Basic
+    @Column(name = "SIGNUP_TIME",nullable = false,insertable = true,updatable = false)
+    public Date getSignupTime() {
+        return signupTime;
+    }
+
+    public void setSignupTime(Date signupTime) {
+        this.signupTime = signupTime;
+    }
+    @Basic
+    @Column(name = "LAST_SIGN_IN",nullable = true,insertable = false,updatable = true)
+    public Date getLastSignin() {
+        return lastSignin;
+    }
+
+    public void setLastSignin(Date lastSignin) {
+        this.lastSignin = lastSignin;
     }
 
     @Override

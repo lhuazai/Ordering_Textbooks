@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,7 +46,7 @@ public class UserController {
     public String addUserPost(@ModelAttribute("user") UserEntity userEntity){
         // 向数据库添加一个用户
         //userRepository.save(userEntity);
-
+        userEntity.setSignupTime(new Date());
         // 向数据库添加一个用户，并将内存中缓存区的数据刷新，立即写入数据库，之后才可以进行访问读取
         userRepository.saveAndFlush(userEntity);
 
@@ -98,7 +99,7 @@ public class UserController {
         return "userLogin";
     }
 
-    //登陆页面
+    //登陆验证
     @RequestMapping(value = "/userLoginPost",method = RequestMethod.POST)
     public String userLoginPost(@ModelAttribute("user") UserEntity userEntity, ModelMap modelMap, HttpSession session){
         UserEntity userEntityBd = userRepository.findByUserName(userEntity.getUserName());
@@ -119,4 +120,12 @@ public class UserController {
         return "redirect:/";
     }
 
+    //登出行为
+    @RequestMapping(value = "/userLoginout",method = RequestMethod.GET)
+    public String userLoginout(HttpSession session){
+        session.setAttribute("user",null);
+        return "redirect:/userLogin";
+    }
+
+    //
 }

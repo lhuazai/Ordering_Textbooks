@@ -33,20 +33,33 @@
 
   <form:form action="/updateUserPost" method="post" commandName="userP" role="form">
     <div class="form-group">
-      <label for="firstName">First Name:</label>
-      <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter FirstName:"
-             value="${user.firstName}"/>
+      <label for="name">用户名:</label>
+      <input type="text" class="form-control" id="name" name="name" placeholder="Enter FirstName:"
+             value="${user.name}"/>
     </div>
     <div class="form-group">
-      <label for="lastName">Last Name:</label>
-      <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter LastName:"
-             value="${user.lastName}"/>
+      <label for="userName">登陆账号:</label>
+      <input type="text" class="form-control" id="userName" name="userName" placeholder="Enter LastName:"
+             value="${user.userName}"/>
     </div>
     <div class="form-group">
-      <label for="password">Password:</label>
+      <label for="password">密码:</label>
       <input type="text" class="form-control" id="password" name="password" placeholder="Enter Password:"
              value="${user.password}"/>
     </div>
+    <div class="form-group">
+      <label for="sex">性别:</label>
+      <input type="text" class="form-control" id="sex" name="sex" placeholder="Enter Password:" value="${user.sex}"/>
+    </div>
+    <div class="form-group">
+      <label for="email">电子邮箱:</label>
+      <input type="text" class="form-control" id="email" name="email" placeholder="Enter Password:" value="${user.email}"/>
+    </div>
+    <div class="form-group">
+      <label for="qq">QQ:</label>
+      <input type="text" class="form-control" id="qq" name="qq" placeholder="Enter Password:" value="${user.qq}"/>
+    </div>
+
     <!-- 把 id 一并写入 userP 中 -->
     <input type="hidden" id="id" name="id" value="${user.id}"/>
 

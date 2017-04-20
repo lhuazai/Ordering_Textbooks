@@ -28,7 +28,7 @@
 </head>
 <body>
 <div class="container">
-  <h1>SpringMVC 博客系统-用户管理</h1>
+  <h1>用户管理</h1>
   <hr/>
 
   <h3>所有用户 <a href="/addUser" type="button" class="btn btn-default btn-sm">添加</a></h3>
@@ -49,6 +49,7 @@
       <tr>
         <th>ID</th>
         <th>姓名</th>
+        <th>账号</th>
         <th>密码</th>
         <th>操作</th>
       </tr>
@@ -56,7 +57,8 @@
       <c:forEach items="${userList}" var="user">
         <tr>
           <td>${user.id}</td>
-          <td>${user.name} ${user.userName}</td>
+          <td>${user.name}</td>
+          <td>${user.userName}</td>
           <td>${user.password}</td>
           <td>
             <a href="/showUser/${user.id}" type="button" class="btn btn-sm btn-success">详情</a>

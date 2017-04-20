@@ -27,7 +27,7 @@
 </head>
 <body>
 <div class="container">
-  <h1>SpringMVC 用户详情</h1>
+  <h1>用户详情</h1>
   <hr/>
 
   <table class="table tavble-bordered table-striped">
@@ -36,17 +36,38 @@
       <td>${user.id}</td>
     </tr>
     <tr>
-      <th>First Name</th>
-      <td>${user.firstName}</td>
+      <th>用户名</th>
+      <td>${user.name}</td>
     </tr>
     <tr>
-      <th>Last Name</th>
-      <td>${user.lastName}</td>
+      <th>账号</th>
+      <td>${user.userName}</td>
     </tr>
     <tr>
-      <th>Password</th>
+      <th>密码</th>
       <td>${user.password}</td>
     </tr>
+    <tr>
+      <th>性别</th>
+      <th>${user.sex}</th>
+    </tr>
+    <tr>
+      <th>电子邮箱</th>
+      <th>${user.email}</th>
+    </tr>
+    <tr>
+      <th>QQ</th>
+      <th>${user.qq}</th>
+    </tr>
+    <tr>
+      <th>注册时间</th>
+      <th>${user.signupTime}</th>
+    </tr>
+    <tr>
+      <th>最后登陆</th>
+      <th>${user.lastSignin}</th>
+    </tr>
+
   </table>
 </div>
 
