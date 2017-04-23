@@ -78,7 +78,10 @@ public class UserController {
                 userEntity.getName(),
                 userEntity.getUserName(),
                 userEntity.getPassword(),
-                userEntity.getId()
+                userEntity.getId(),
+                userEntity.getEmail(),
+                userEntity.getSex(),
+                userEntity.getQq()
         );
         return "redirect:/users";
     }

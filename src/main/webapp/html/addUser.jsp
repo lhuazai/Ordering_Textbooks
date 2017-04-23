@@ -50,7 +50,7 @@
     </div>
     <div class="form-group">
       <label for="sex">性别:</label>
-      <input type="text" class="form-control" id="sex" name="sex" placeholder="Enter Password:"/>
+      <select class="form-control"id="sex" name="sex"><option>男</option><option>女</option><option>未知</option></select>
     </div>
     <div class="form-group">
       <label for="email">电子邮箱:</label>

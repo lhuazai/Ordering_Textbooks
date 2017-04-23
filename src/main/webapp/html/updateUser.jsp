@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: sjj
@@ -49,7 +50,10 @@
     </div>
     <div class="form-group">
       <label for="sex">性别:</label>
-      <input type="text" class="form-control" id="sex" name="sex" placeholder="Enter Password:" value="${user.sex}"/>
+      <select class="form-control"id="sex" name="sex">
+        <option <c:if test="${user.sex eq '男'}">selected</c:if>>男</option>
+        <option <c:if test="${user.sex eq '女'}">selected</c:if>>女</option>
+        <option <c:if test="${user.sex eq '未知'}">selected</c:if>>未知</option></select>
     </div>
     <div class="form-group">
       <label for="email">电子邮箱:</label>
