@@ -49,6 +49,10 @@
             right: 0;
             padding: 16px;
         }
+        #main-iframe{
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
@@ -77,26 +81,34 @@
     <div class="relative">
         <div class="nav-group">
             <ul class="nav nav-pills nav-stacked">
-                <li role="presentation" class="active"><a href="#">Home</a></li>
-                <li role="presentation"><a href="#">Profile</a></li>
-                <li role="presentation"><a href="#">Messages</a></li>
+                <li role="presentation" data-url="/users" class="active data-url"><a href="#/users">用户管理</a></li>
+                <li role="presentation" data-url="" class="data-url"><a href="#">Profile</a></li>
+                <li role="presentation" data-url="data-url"><a href="#">Messages</a></li>
             </ul>
 
         </div>
         <div class="content-group">
-            <iframe style="width: 100%;height: 100%" src="/users">
-
+            <iframe src="/users" id="main-iframe">
             </iframe>
         </div>
-
     </div>
-
-
 </div>
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
-
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('[role=presentation]').click(function (event) {
+            var e=event.currentTarget;
+            $(e).siblings('[role=presentation]').removeClass("active");
+            $(e).addClass("active");
+        })
+        $('.data-url').click(function (event) {
+            var e=event.currentTarget;
+            $('#main-iframe').attr("src",$(e).attr("data-url"))
+        })
+    })
+</script>
 </body>
 </html>
