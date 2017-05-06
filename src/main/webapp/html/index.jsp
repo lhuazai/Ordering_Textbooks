@@ -83,7 +83,7 @@
             <ul class="nav nav-pills nav-stacked">
                 <li role="presentation" data-url="/users" class="active data-url"><a href="#/users">用户管理</a></li>
                 <li role="presentation" data-url="/role/userRolePage" class="data-url"><a href="#/role/userRolePage">角色管理</a></li>
-                <li role="presentation" data-url="data-url"><a href="#">Messages</a></li>
+                <li role="presentation" data-url="data-url"><a href="#">目录管理</a></li>
             </ul>
 
         </div>

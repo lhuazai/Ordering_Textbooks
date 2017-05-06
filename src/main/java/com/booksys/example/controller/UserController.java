@@ -1,5 +1,6 @@
 package com.booksys.example.controller;
 
+import com.booksys.example.bean.ServiceRes;
 import com.booksys.example.model.UserEntity;
 import com.booksys.example.model.UserroleEntity;
 import com.booksys.example.repository.UserRepository;
@@ -7,10 +8,7 @@ import com.booksys.example.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Date;
@@ -38,7 +36,15 @@ public class UserController {
         // 返回pages目录下的userManage.jsp
         return "userManage";
     }
-
+    // 用户信息ajax
+    @ResponseBody
+    @RequestMapping(value = "/ajax/users", method = RequestMethod.GET)
+    public ServiceRes<List<UserEntity>> ajaxUsers(ModelMap modelMap){
+        // 找到user表里面的所有记录
+        List<UserEntity> userEntityList = userRepository.findAll();
+        // 返回pages目录下的userManage.jsp
+        return new ServiceRes<>(userEntityList);
+    }
     // 添加用户表单页面
     @RequestMapping(value = "/addUser", method = RequestMethod.GET)
     public String addUser(){

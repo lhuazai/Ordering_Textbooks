@@ -34,6 +34,9 @@
         .h-1000{
             height: 1000px;
         }
+        .h-500{
+            height: 500px;
+        }
     </style>
 </head>
 <body>
@@ -41,7 +44,7 @@
 <div class="w-1000 margin-auto">
     <h1>角色管理</h1>
     <hr/>
-    <div class="inline w-400 h-1000">
+    <div class="inline w-400 h-1000 p-10">
         <h3>所有角色 <a data-toggle="modal" data-target="#addRoleModal" type="button" class="btn btn-default btn-sm">添加</a></h3>
         <div class="list-group">
             <c:forEach items="${roleList}" var="item">
@@ -49,8 +52,8 @@
             </c:forEach>
         </div>
     </div>
-    <div class="inline w-400 h-1000">
-        <h3>角色成员 <a data-toggle="modal" data-target="#addRoleModal" type="button" class="btn btn-default btn-sm">添加</a></h3>
+    <div class="inline w-400 h-1000 ml20 p-10" style="border-left: 1px solid gray">
+        <h3>角色成员 <a data-toggle="modal" data-target="#usersChosenModal" type="button" class="btn btn-default btn-sm" id="addUserRoleButton" style="display: none">添加</a></h3>
         <div class="list-group" id="userRole-group">
 
         </div>
@@ -85,6 +88,26 @@
     </div>
 </div>
 
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="usersChosenModalLabel" id="usersChosenModal">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="usersChosenModalLabel">添加角色</h4>
+            </div>
+            <div class="modal-body">
+                <div class="h-500 list-group" id="usersList">
+
+                </div>
+                <div class="alert alert-danger" role="alert" id="usersChosenError" ></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="addUserRoleSubmitClick()">确认保存</button>
+            </div></div>
+    </div>
+</div>
+
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
@@ -93,10 +116,13 @@
 <script src="/js/loading.js"></script>
 <script>
     var staticUserRole=[];
+    var staticUsers=[];
+    var chosenRoleId;
 
     $(function () {
         setAddRoleModalEvent();
         setRoleItemClickEvent();
+        setUsersChosenModalEvent();
     })
 
     function setRoleItemClickEvent(){
@@ -117,7 +143,9 @@
         $.ajax({
             url:"/role/ajax/RoleUser/"+key,
             success:function (data) {
+                chosenRoleId=key;
                 staticUserRole=data.t;
+                $('#addUserRoleButton').show();
                 refreshUserRoleList();
             },
             error:function () {
@@ -227,6 +255,62 @@
     }
     function addRoleModalHide() {
         $('#addRoleModal').modal('hide');
+    }
+
+    function setUsersChosenModalEvent() {
+        $("#usersChosenModal").on("show.bs.modal",function (e) {
+            getUsers();
+        })
+    }
+
+    function getUsers() {
+        $("#usersList").html("加载中");
+        $.ajax({
+            url:"/ajax/users",
+            type:"GET",
+            success:function (data) {
+                if(data.result){
+                    staticUsers=data.t;
+                    refreshUsers();
+                }else {
+                    $("#usersList").html("加载失败");
+                }
+            },
+            error:function () {
+                $("#usersList").html("加载失败");
+            }
+
+        })
+    }
+
+    function refreshUsers() {
+        $("#usersList").empty();
+        for(var i=0;i<staticUsers.length;i++){
+            $("#usersList").append('<li class="list-group-item roleItem"><input type="checkbox" onchange="onUserCheckBoxChange(this,'+i+')"><span class="ml20">'+staticUsers[i].name+'</span></li>');
+        }
+    }
+
+    function onUserCheckBoxChange(e,key) {
+        var checked=$(e).is(":checked");
+        staticUsers[key].checked=checked;
+    }
+
+    function addUserRoleSubmitClick() {
+        var chosen=[];
+        for(var i=0;i<staticUsers.length;i++){
+            if(staticUsers[i].checked){
+                chosen.push(staticUsers[i].id);
+            }
+        }
+        $.ajax({
+            url:"/role/ajax/addUserRole",
+            type:"POST",
+            data:{roleId:chosenRoleId,userIds:chosen},
+            traditional:true,
+            success:function (data) {
+                console.log(data)
+            }
+        })
     }
 
     function stopBubble(e) {
