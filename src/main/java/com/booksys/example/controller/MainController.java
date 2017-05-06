@@ -1,11 +1,17 @@
 package com.booksys.example.controller;
 
+import com.booksys.example.model.UserEntity;
+import com.booksys.example.model.UserroleEntity;
+import com.booksys.example.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.booksys.example.repository.UserRepository;
+
+import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by sjj on 2015/10/24 0024.
@@ -16,10 +22,16 @@ public class MainController {
     // 自动装配
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private UserRoleRepository userRoleRepository;
+
 
     // 首页
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String index() {
+    public String index(HttpSession session) {
+        UserEntity userEntity= (UserEntity) session.getAttribute("user");
+        List<UserroleEntity> userroleEntities=userRoleRepository.findAllByUserId(userEntity.getId());
+
         return "index";
     }
 

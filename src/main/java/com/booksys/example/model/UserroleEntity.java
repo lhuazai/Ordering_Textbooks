@@ -1,5 +1,6 @@
 package com.booksys.example.model;
 
+import javax.management.relation.Role;
 import javax.persistence.*;
 
 /**
@@ -11,9 +12,10 @@ public class UserroleEntity {
     private int id;
     private int roleId;
     private int userId;
-
+    private UserEntity userEntity;
+    private RoleEntity roleEntity;
     @Id
-    @Column(name = "id")
+    @Column(name = "id",nullable = false,updatable = false,insertable = true)
     public int getId() {
         return id;
     }
@@ -23,7 +25,7 @@ public class UserroleEntity {
     }
 
     @Basic
-    @Column(name = "roleId")
+    @Column(name = "roleId",nullable = false,updatable = false,insertable = true)
     public int getRoleId() {
         return roleId;
     }
@@ -33,7 +35,7 @@ public class UserroleEntity {
     }
 
     @Basic
-    @Column(name = "userId")
+    @Column(name = "userId",nullable = false,updatable = false,insertable = true)
     public int getUserId() {
         return userId;
     }
@@ -41,6 +43,29 @@ public class UserroleEntity {
     public void setUserId(int userId) {
         this.userId = userId;
     }
+
+    @OneToOne(targetEntity = UserEntity.class)
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    @OneToOne(targetEntity = RoleEntity.class)
+    public RoleEntity getRoleEntity() {
+        return roleEntity;
+    }
+
+    public void setRoleEntity(RoleEntity roleEntity) {
+        this.roleEntity = roleEntity;
+    }
+
+
+
+
+
 
     @Override
     public boolean equals(Object o) {

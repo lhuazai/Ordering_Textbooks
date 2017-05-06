@@ -1,7 +1,9 @@
 package com.booksys.example.controller;
 
 import com.booksys.example.model.UserEntity;
+import com.booksys.example.model.UserroleEntity;
 import com.booksys.example.repository.UserRepository;
+import com.booksys.example.repository.UserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,6 +24,8 @@ public class UserController {
     // 自动装配
     @Autowired
     private UserRepository userRepository;
+
+
     // 用户管理
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     public String users(ModelMap modelMap){

@@ -3,6 +3,7 @@ package com.booksys.example.model;
 import javax.persistence.*;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by sjj on 2015/10/24 0024.
@@ -19,7 +20,7 @@ public class UserEntity {
     private String qq;
     private Date signupTime;
     private Date lastSignin;
-    private Collection<BlogEntity> blogsById;
+    private List<UserroleEntity> userroleEntities;
 
     @Id
     @Column(name = "ID", nullable = false, insertable = true, updatable = true)
@@ -135,12 +136,12 @@ public class UserEntity {
         return result;
     }
 
-    @OneToMany(mappedBy = "userByUserid")
-    public Collection<BlogEntity> getBlogsById() {
-        return blogsById;
+
+    public List<UserroleEntity> findUserroleEntities() {
+        return userroleEntities;
     }
 
-    public void setBlogsById(Collection<BlogEntity> blogsById) {
-        this.blogsById = blogsById;
+    public void setUserroleEntities(List<UserroleEntity> userroleEntities) {
+        this.userroleEntities = userroleEntities;
     }
 }
