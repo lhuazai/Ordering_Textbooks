@@ -1,5 +1,34 @@
 CREATE DATABASE `book_system` /*!40100 DEFAULT CHARACTER SET utf8 */;
 
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `url` varchar(45) NOT NULL,
+  `parentId` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `intro` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `name_UNIQUE` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `rolemenu` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `menuId` int(11) NOT NULL,
+  `roleId` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 CREATE TABLE `user` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `NAME` varchar(45) NOT NULL,
@@ -17,35 +46,28 @@ CREATE TABLE `user` (
   UNIQUE KEY `QQ_UNIQUE` (`QQ`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `menu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `url` varchar(45) NOT NULL,
-  `parentId` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
+
+CREATE TABLE `user_userrole` (
+  `user_ID` int(11) NOT NULL,
+  `userroleEntities_id` int(11) NOT NULL,
+  UNIQUE KEY `userroleEntities_id` (`userroleEntities_id`),
+  KEY `FKF32EE8B55DBD553C` (`userroleEntities_id`),
+  KEY `FKF32EE8B587AC6BDD` (`user_ID`),
+  CONSTRAINT `FKF32EE8B55DBD553C` FOREIGN KEY (`userroleEntities_id`) REFERENCES `userrole` (`id`),
+  CONSTRAINT `FKF32EE8B587AC6BDD` FOREIGN KEY (`user_ID`) REFERENCES `user` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) NOT NULL,
-  `intro` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
-CREATE TABLE `rolemenu` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `menuId` int(11) NOT NULL,
-  `userRoleId` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `userrole` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `roleId` int(10) NOT NULL,
   `userId` int(10) NOT NULL,
+  `roleEntity_id` int(11) DEFAULT NULL,
+  `userEntity_ID` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  KEY `FKF02B8EC11BAB297A` (`roleEntity_id`),
+  KEY `FKF02B8EC161EB855A` (`userEntity_ID`),
+  CONSTRAINT `FKF02B8EC11BAB297A` FOREIGN KEY (`roleEntity_id`) REFERENCES `role` (`id`),
+  CONSTRAINT `FKF02B8EC161EB855A` FOREIGN KEY (`userEntity_ID`) REFERENCES `user` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
