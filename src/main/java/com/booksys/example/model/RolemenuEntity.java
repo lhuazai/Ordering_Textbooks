@@ -10,7 +10,7 @@ import javax.persistence.*;
 public class RolemenuEntity {
     private int id;
     private int menuId;
-    private int userRoleId;
+    private int roleId;
 
     @Id
     @Column(name = "id")
@@ -33,13 +33,13 @@ public class RolemenuEntity {
     }
 
     @Basic
-    @Column(name = "userRoleId")
-    public int getUserRoleId() {
-        return userRoleId;
+    @Column(name = "roleId")
+    public int getRoleId() {
+        return roleId;
     }
 
-    public void setUserRoleId(int userRoleId) {
-        this.userRoleId = userRoleId;
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
     }
 
     @Override
@@ -51,7 +51,7 @@ public class RolemenuEntity {
 
         if (id != that.id) return false;
         if (menuId != that.menuId) return false;
-        if (userRoleId != that.userRoleId) return false;
+        if (roleId != that.roleId) return false;
 
         return true;
     }
@@ -60,7 +60,7 @@ public class RolemenuEntity {
     public int hashCode() {
         int result = id;
         result = 31 * result + menuId;
-        result = 31 * result + userRoleId;
+        result = 31 * result + roleId;
         return result;
     }
 }
