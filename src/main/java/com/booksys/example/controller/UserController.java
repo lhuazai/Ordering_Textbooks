@@ -129,7 +129,7 @@ public class UserController {
             modelMap.addAttribute("user", userEntity);
             return "userLogin";
         }
-        session.setAttribute("user",userEntity);
+        session.setAttribute("user",userEntityBd);
         return "redirect:/";
     }
 

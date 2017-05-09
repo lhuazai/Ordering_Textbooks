@@ -127,4 +127,29 @@ public class RoleController {
         menuRepository.delete(menuId);
         return "redirect:/role/userRolePage";
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/binMenu",method = RequestMethod.POST)
+    public ServiceRes bindMenu(@RequestParam(name = "roleId",required = true) int roleId,@RequestParam(name = "menuId",required = true) int menuId){
+        List<RolemenuEntity> rolemenuEntities=roleMenuRepository.findAllByRoleIdAndMenuId(roleId,menuId);
+        if(rolemenuEntities.size()>0){
+            return new ServiceRes("该菜单与角色是绑定状态，请刷新页面",false);
+        }
+        RolemenuEntity rolemenuEntity=new RolemenuEntity();
+        rolemenuEntity.setMenuId(menuId);
+        rolemenuEntity.setRoleId(roleId);
+        roleMenuRepository.saveAndFlush(rolemenuEntity);
+        return new ServiceRes("新增成功",true);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/unBinMenu",method = RequestMethod.POST)
+    public ServiceRes unBindMenu(@RequestParam(name = "roleId",required = true) int roleId,@RequestParam(name = "menuId",required = true) int menuId){
+        List<RolemenuEntity> rolemenuEntities=roleMenuRepository.findAllByRoleIdAndMenuId(roleId,menuId);
+        if(rolemenuEntities.size()==0){
+            return new ServiceRes("该菜单与角色是解绑状态，请刷新页面",false);
+        }
+        roleMenuRepository.deleteAllByRoleIdAndMenuId(roleId,menuId);
+        return new ServiceRes("删除成功",true);
+    }
 }

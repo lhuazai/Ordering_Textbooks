@@ -39,13 +39,16 @@
         .h-500 {
             height: 500px;
         }
-        .w-40{
+
+        .w-40 {
             width: 40px;
         }
-        .c-gray{
+
+        .c-gray {
             color: gray;
         }
-        .c-gold{
+
+        .c-gold {
             color: gold;
         }
     </style>
@@ -77,10 +80,11 @@
                     id="addMenuButton">添加</a></h3>
         <div class="list-group" id="menuList">
             <c:forEach items="${menuList}" var="item">
-                <a href="javascript:void(0)" onclick="" class="list-group-item roleItem" key="${item.id}"
+                <a href="javascript:void(0)"class="list-group-item roleItem"
+                   key="${item.id}"
                    title="${item.url}">
                     <div class="inline w-40">
-                        <span class="glyphicon glyphicon-ok hiden"></span>
+                        <span class="glyphicon glyphicon-ok hiden" onclick="onToggleMenuClick(this)" ></span>
                     </div>
                         ${item.name}<span class="pull-right glyphicon glyphicon-remove"
                                           onclick="onDelMenuClick(${item.id})"></span>
@@ -183,7 +187,7 @@
     var staticUserRole = [];
     var staticUsers = [];
     var chosenRoleId;
-    var staticRoleMenuList=[];
+    var staticRoleMenuList = [];
 
     $(function () {
         setAddRoleModalEvent();
@@ -225,7 +229,7 @@
                 staticUserRole = data.t.userRoleList;
                 $('#addUserRoleButton').show();
                 refreshUserRoleList();
-                staticRoleMenuList=data.t.roleMenuList;
+                staticRoleMenuList = data.t.roleMenuList;
                 refreshRoleMenuList();
             },
             error: function () {
@@ -239,19 +243,19 @@
     }
 
     function refreshRoleMenuList() {
-        var listE=$("#menuList>a");
-        for(var i=0;i<listE.length;i++){
-            var key=$(listE[i]).attr("key");
-            var isExist=false;
-            for(var j=0;j<staticRoleMenuList.length;j++){
-                if(staticRoleMenuList[j].menuId==key){
-                    isExist=true;
+        var listE = $("#menuList>a");
+        for (var i = 0; i < listE.length; i++) {
+            var key = $(listE[i]).attr("key");
+            var isExist = false;
+            for (var j = 0; j < staticRoleMenuList.length; j++) {
+                if (staticRoleMenuList[j].menuId == key) {
+                    isExist = true;
                 }
             }
-            if(isExist){
-                $("#menuList>a>div>span").removeClass("c-gray").addClass("c-gold").show();
-            }else {
-                $("#menuList>a>div>span").removeClass("c-gold").addClass("c-gray").show();
+            if (isExist) {
+                $(listE[i]).children("div").children("span").removeClass("c-gray").addClass("c-gold").show();
+            } else {
+                $(listE[i]).children("div").children("span").removeClass("c-gold").addClass("c-gray").show();
             }
         }
     }
@@ -261,9 +265,6 @@
         for (var i = 0; i < staticUserRole.length; i++) {
             $('#userRole-group').append('<a class="list-group-item roleItem">' + staticUserRole[i].userEntity.name + '<span class="pull-right glyphicon glyphicon-remove" onclick="delUserRoleClick(' + i + ')"></span></a>')
         }
-    }
-    function isTheMenuMatchedTheRole(menuId) {
-
     }
 
     function onRoleItemDelClick(key) {
@@ -544,6 +545,83 @@
             a.submit();
         })
     }
+    function onToggleMenuClick(e) {
+        var menuId = $(e).parent().parent().attr("key");
+        console.log(menuId)
+        var matched=isTheMenuBindWhitChosonRole(menuId);
+        if(!matched){
+            bindMenu(menuId,chosenRoleId);
+        }else {
+            unBindMenu(menuId,chosenRoleId);
+        }
+    }
+
+    function bindMenu(menuId, roleId) {
+        showLoadingLayer();
+        $.ajax({
+            "url": "/role/ajax/binMenu",
+            data: {menuId:menuId,roleId:roleId},
+            type:"POST",
+            success:function (data) {
+                removeLoadingLayer();
+                if(data.result){
+                    $("#menuList>a[key="+menuId+"]>div>span").removeClass("c-gray").addClass("c-gold").show();
+                }else {
+                    swal({
+                        title:"警告",
+                        text:data.message,
+                        type:"error"
+                    })
+                }
+            },
+            error:function () {
+                swal({
+                    title:"警告",
+                    text:"后台错误",
+                    type:"error"
+                })
+            }
+        })
+    }
+
+    function unBindMenu(menuId, roleId) {
+        showLoadingLayer();
+        $.ajax({
+            "url": "/role/ajax/unBinMenu",
+            data: {menuId:menuId,roleId:roleId},
+            type:"POST",
+            success:function (data) {
+                removeLoadingLayer();
+                if(data.result){
+                    $("#menuList>a[key="+menuId+"]>div>span").removeClass("c-gold").addClass("c-gray").show();
+                }else {
+                    swal({
+                        title:"警告",
+                        text:data.message,
+                        type:"error"
+                    })
+                }
+            },
+            error:function () {
+                swal({
+                    title:"警告",
+                    text:"后台错误",
+                    type:"error"
+                })
+            }
+        })
+    }
+
+
+    function isTheMenuBindWhitChosonRole(menuId) {
+        for(var i=0;i<staticRoleMenuList.length;i++){
+            if(staticRoleMenuList[i].menuId==menuId){
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     function stopBubble(e) {
         //如果提供了事件对象，则这是一个非IE浏览器

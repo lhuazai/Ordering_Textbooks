@@ -83,7 +83,7 @@
             <ul class="nav nav-pills nav-stacked">
                 <li role="presentation" data-url="/users" class="active data-url"><a href="#/users">用户管理</a></li>
                 <li role="presentation" data-url="/role/userRolePage" class="data-url"><a href="#/role/userRolePage">角色管理</a></li>
-                <li role="presentation" data-url="/role/roleMenuPage" class="data-url"><a href="#">目录管理</a></li>
+                <li role="presentation" data-url="/book/list" class="data-url"><a href="#/book/list">教材管理</a></li>
             </ul>
 
         </div>
@@ -109,15 +109,7 @@
             $('#main-iframe').attr("src",$(e).attr("data-url"))
         })
     })
-    
-    function test() {
-        var data=[];
-        for(var i=0;i<9;i++){
-            data[i]=1;
-        }
-        var fuhao=["+","-","*","/"];
-        var fuhaozu=[];
-    }
+
 </script>
 </body>
 </html>

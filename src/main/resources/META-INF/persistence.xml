@@ -6,18 +6,20 @@
         <class>com.booksys.example.model.RoleEntity</class>
         <class>com.booksys.example.model.RolemenuEntity</class>
         <class>com.booksys.example.model.UserroleEntity</class>
+        <class>com.booksys.example.model.ClazzEntity</class>
+        <class>com.booksys.example.model.BookEntity</class>
         <properties>
             <!-- 使用MySQL方言 -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
             <!-- 数据库连接的URL地址 -->
             <property name="hibernate.connection.url"
-                      value="jdbc:mysql://localhost:3306/book_system"/>
+                      value="jdbc:mysql://58e5bf360111b.bj.cdb.myqcloud.com:11525/book_system"/>
             <!-- 数据库连接的驱动 -->
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
             <!-- 数据库连接的用户名 -->
-            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.username" value="cdb_outerroot"/>
             <!-- 数据库连接的密码 -->
-            <property name="hibernate.connection.password" value="password"/>
+            <property name="hibernate.connection.password" value="lshsb123"/>
             <!-- 显示SQL语句 -->
             <property name="hibernate.show_sql" value="true"/>
 
