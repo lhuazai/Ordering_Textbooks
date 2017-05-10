@@ -33,7 +33,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>添加用户</h1>
+    <h1>添加教材</h1>
     <hr/>
     <form:form action="/book/addPost" method="post" commandName="book" role="form">
         <div class="form-group">

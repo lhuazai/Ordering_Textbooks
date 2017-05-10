@@ -11,6 +11,7 @@ public class ClazzEntity {
     private int id;
     private String name;
     private int inUse;
+    private int count;
 
     @Id
     @Column(name = "id")
@@ -62,5 +63,14 @@ public class ClazzEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + inUse;
         return result;
+    }
+
+    @Transient
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

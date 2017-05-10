@@ -8,6 +8,7 @@
         <class>com.booksys.example.model.UserroleEntity</class>
         <class>com.booksys.example.model.ClazzEntity</class>
         <class>com.booksys.example.model.BookEntity</class>
+        <class>com.booksys.example.model.ClazzUserEntity</class>
         <properties>
             <!-- 使用MySQL方言 -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5Dialect"/>
