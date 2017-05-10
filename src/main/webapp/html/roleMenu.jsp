@@ -32,10 +32,10 @@
             color: red;
         }
         .h-1000{
-            height: 1000px;
+            height: 500px;
         }
         .h-500{
-            height: 500px;
+            height: 400px;
         }
     </style>
 </head>

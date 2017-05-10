@@ -13,7 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>SpringMVC Demo 首页</title>
+    <title>教材征订系统</title>
 
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -59,13 +59,13 @@
 <nav class="navbar navbar-default" style="height: 50px">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" href="#">教材征订系统</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">你好，王家卫 <span class="caret"></span></a>
+                       aria-expanded="false">你好，管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="#">个人设置</a></li>
                         <li><a href="#">更改密码</a></li>
