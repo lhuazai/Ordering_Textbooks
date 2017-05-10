@@ -39,7 +39,7 @@
 </head>
 <body>
 <div class="main">
-    <h1 class="center">教材管理系统登陆</h1>
+    <h1 class="center">教材管理系统登录</h1>
     <form class="input-group" action="/userLoginPost" method="post">
         <div class="form-group">
             <label for="exampleInputEmail1">用户名</label>
@@ -58,7 +58,7 @@
         </c:if>
         <br>
         <div class="center">
-            <input type="submit" class="btn btn-default" value="登陆">
+            <input type="submit" class="btn btn-default" value="登录">
         </div>
 
     </form>
