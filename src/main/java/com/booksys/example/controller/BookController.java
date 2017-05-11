@@ -1,5 +1,6 @@
 package com.booksys.example.controller;
 
+import com.booksys.example.bean.ServiceRes;
 import com.booksys.example.model.BookEntity;
 import com.booksys.example.model.UserEntity;
 import com.booksys.example.repository.BookRepository;
@@ -10,6 +11,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
 import java.awt.print.Book;
@@ -47,6 +49,13 @@ public class BookController {
         return "bookList";
     }
 
+    // 教材管理
+    @ResponseBody
+    @RequestMapping(value = "/ajax/list", method = RequestMethod.POST)
+    public ServiceRes ajaxList(){
+        List<BookEntity> bookEntities=bookRepository.findAll();
+        return new ServiceRes(bookEntities,true,"请求成功");
+    }
     // 新增教材
     @RequestMapping(value = "/add", method = RequestMethod.GET)
     public String addBook(ModelMap modelMap){

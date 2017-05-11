@@ -83,4 +83,34 @@ public class OrderController {
         return "bookOrder";
     }
 
+
+    @ResponseBody
+    @RequestMapping(value = "/ajax/addBook",method = RequestMethod.POST)
+    public ServiceRes addUser(@RequestParam(name = "bookIds",required = true) int[] bookIds,@RequestParam(name = "orderId",required = true) int orderId,
+                              HttpSession session){
+        List<BookOrderEntity> bookOrderEntities=bookOrderRepository.findAllByOrderId(orderId);
+        for (int i = 0; i <bookIds.length ; i++) {
+            if(!isTheBookInList(bookOrderEntities,bookIds[i])){
+                BookOrderEntity bookOrderEntity=new BookOrderEntity();
+                bookOrderEntity.setBookId(bookIds[i]);
+                bookOrderEntity.setOrderId(orderId);
+                bookOrderEntity.setBuildTime(dateFormat.format(new Date()));
+                UserEntity userEntity= (UserEntity) session.getAttribute("user");
+                bookOrderEntity.setBuildUserId(userEntity.getId());
+                bookOrderRepository.save(bookOrderEntity);
+            }
+        }
+        bookOrderRepository.flush();
+
+        return new ServiceRes("添加成功",true);
+    }
+
+    private boolean isTheBookInList(List<BookOrderEntity> bookOrderEntities,int bookId){
+        for (int i = 0; i <bookOrderEntities.size() ; i++) {
+            if(bookId==bookOrderEntities.get(i).getBookId()){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -81,7 +81,7 @@ public class ClazzController {
         return "clazzUsers";
     }
 
-    //获取没有加入班级的学生
+
     @ResponseBody
     @RequestMapping(value = "/ajax/addUser",method = RequestMethod.POST)
     public ServiceRes addUser(@RequestParam(name = "userIds",required = true) int[] userIds,@RequestParam(name = "clazzId",required = true) int clazzId){
