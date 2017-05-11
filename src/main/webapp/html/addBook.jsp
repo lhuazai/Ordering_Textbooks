@@ -45,6 +45,10 @@
             <input type="text" class="form-control" id="publisher" name="publisher" placeholder="输入出版社名:"/>
         </div>
         <div class="form-group">
+            <label for="price">出版社:</label>
+            <input type="number" min="0" max="9999" class="form-control" id="price" name="price" placeholder="输入出版社名:"/>
+        </div>
+        <div class="form-group">
             <button type="submit" class="btn btn-sm btn-success">提交</button>
         </div>
     </form:form>

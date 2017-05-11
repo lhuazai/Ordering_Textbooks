@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -50,6 +51,7 @@
                 <th>ID</th>
                 <th>教材名称</th>
                 <th>出版社</th>
+                <th>价格</th>
                 <th>添加人</th>
                 <th>添加时间</th>
                 <th>操作</th>
@@ -60,6 +62,7 @@
                     <td>${book.id}</td>
                     <td>${book.name}</td>
                     <td>${book.publisher}</td>
+                    <td>￥<fmt:formatNumber type="number" value="${book.price}"  pattern="#.00"/></td>
                     <td>${book.user.name}</td>
                     <td>${book.addTime}</td>
                     <td>

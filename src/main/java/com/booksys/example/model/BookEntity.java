@@ -14,6 +14,7 @@ public class BookEntity {
     private int addUserId;
     private String addTime;
     private int inUse;
+    private float price;
     private UserEntity user;
 
     @Id
@@ -75,6 +76,20 @@ public class BookEntity {
     public void setInUse(int inUse) {
         this.inUse = inUse;
     }
+
+
+    @Basic
+    @Column(name = "price")
+    public float getPrice() {
+        return price;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
+    }
+
+
+
 
     @Override
     public boolean equals(Object o) {

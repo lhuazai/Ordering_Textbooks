@@ -24,7 +24,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/book")
 public class BookController {
-    DateFormat dateFormat=new SimpleDateFormat("yy-MM-dd HH:mm:ss");
+    DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
     BookRepository bookRepository;
@@ -33,7 +33,7 @@ public class BookController {
 
     // 教材管理
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String users(ModelMap modelMap){
+    public String list(ModelMap modelMap){
         // 找到里面的所有记录
         List<BookEntity> bookEntities=bookRepository.findAll();
         for (int i = 0; i <bookEntities.size() ; i++) {
