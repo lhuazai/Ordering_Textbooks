@@ -11,4 +11,6 @@ import java.util.List;
  */
 public interface ClazzUserRepository extends JpaRepository<ClazzUserEntity,Integer> {
     List<ClazzUserEntity> findAllByClazzId(int clazzId);
+    List<ClazzUserEntity> findAllByUserId(int userId);
+    List<ClazzUserEntity> findAllByClazzIdAndUserId(int clazzId,int userId);
 }

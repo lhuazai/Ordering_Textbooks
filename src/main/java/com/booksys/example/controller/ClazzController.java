@@ -62,7 +62,11 @@ public class ClazzController {
         clazzRepository.delete(id);
         return "redirect:/clazz/list";
     }
-
+    @RequestMapping(value = "/user/del/{clazzId}/{id}", method = RequestMethod.GET)
+    public String delClazzUser(@PathVariable("id") Integer id,@PathVariable("clazzId") Integer clazzId){
+        clazzUserRepository.delete(id);
+        return "redirect:/clazz/users/"+clazzId;
+    }
     @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     public String clazzUsers(@PathVariable("id") Integer id,ModelMap modelMap){
         ClazzEntity clazzEntity=clazzRepository.findOne(id);
@@ -75,5 +79,20 @@ public class ClazzController {
         modelMap.addAttribute("clazz",clazzEntity);
         modelMap.addAttribute("userList",clazzUserEntities);
         return "clazzUsers";
+    }
+
+    //获取没有加入班级的学生
+    @ResponseBody
+    @RequestMapping(value = "/ajax/addUser",method = RequestMethod.POST)
+    public ServiceRes addUser(@RequestParam(name = "userIds",required = true) int[] userIds,@RequestParam(name = "clazzId",required = true) int clazzId){
+        for (int i = 0; i <userIds.length ; i++) {
+            ClazzUserEntity clazzUserEntity=new ClazzUserEntity();
+            clazzUserEntity.setUserId(userIds[i]);
+            clazzUserEntity.setClazzId(clazzId);
+            clazzUserRepository.save(clazzUserEntity);
+        }
+        clazzUserRepository.flush();
+
+        return new ServiceRes("添加成功",true);
     }
 }

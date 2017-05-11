@@ -37,7 +37,7 @@
     <c:if test="${empty userList}">
         <p class="bg-warning">
             <br/>
-            班级暂时无人，请<a href="/clazz/add" type="button" class="btn btn-default btn-sm">添加</a>
+            班级暂时无人，请<a href="javascript:onAddClazzClick()" type="button" class="btn btn-default btn-sm">添加</a>
             <br/>
             <br/>
         </p>
@@ -49,7 +49,7 @@
             <tr>
                 <th>ID</th>
                 <th>班级名称</th>
-                <th>人数</th>
+                <th>性别</th>
                 <th>操作</th>
             </tr>
 
@@ -59,14 +59,31 @@
                     <td>${user.userEntity.name}</td>
                     <td>${user.userEntity.sex}</td>
                     <td>
-                        <a href="/clazz/del/${clazz.id}" type="button" class="btn btn-sm btn-danger">删除</a>
+                        <a href="/clazz/user/del/${clazz.id}/${user.id}" type="button" class="btn btn-sm btn-danger">删除</a>
                     </td>
                 </tr>
             </c:forEach>
         </table>
     </c:if>
 </div>
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="usersChosenModalLabel" id="usersChosenModal">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="usersChosenModalLabel">选择班级为空的学生</h4>
+            </div>
+            <div class="modal-body">
+                <div class="h-500 list-group" id="usersList">
 
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="addUserSubmitClick()">确认保存</button>
+            </div></div>
+    </div>
+</div>
 <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
 <script src="/js/jquery.min.js"></script>
 
@@ -74,55 +91,68 @@
 <script src="/js/bootstrap.min.js"></script>
 <script src="/js/sweetalert.min.js"></script>
 <script>
-    function onAddClazzClick() {
-        swal({
-                title: "新增班级",
-                text: "请输入班级名称",
-                type: "input",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true,
-            },
-            function(inputValue){
-                if (inputValue === false) return false;
-                if (inputValue === "") {
-                    swal({
-                        title:"警告",
-                        text:"请至少输入一个汉字",
-                        type:"error"
-                    })
-                    return false
+    var staticUsers=[]
+    $(function () {
+        setUserModelEvent()
+    })
+
+    function setUserModelEvent() {
+        $("#usersChosenModal").on("show.bs.modal",function () {
+            getUsers()
+        })
+    }
+
+    function getUsers() {
+        $.ajax({
+            url:"/role/ajax/getStudentsFree",
+            type:"POST",
+            success:function (data) {
+                if(data.result){
+                    staticUsers=data.t;
+                    renderUsers();
+                }else {
+                    swal(data.message)
                 }
-                $.ajax({
-                    url:"/clazz/add",
-                    type:"POST",
-                    data:{name:inputValue},
-                    success:function (data) {
-                        if(data.result){
-                            swal({
-                                title:"成功",
-                                text:"添加成功",
-                                type:"success"
-                            },function () {
-                                location.reload();
-                            })
-                        }else {
-                            swal({
-                                title:"错误",
-                                text:data.message,
-                                type:"error"
-                            })
-                        }
-                    },
-                    error:function () {
-                        swal({
-                            title:"错误",
-                            text:"服务错误",
-                            type:"error"
-                        })
-                    }
-                })
-            });
+            }
+        })
+    }
+
+    function renderUsers() {
+        $("#usersList").empty();
+        for(var i=0;i<staticUsers.length;i++){
+            $("#usersList").append('<li class="list-group-item roleItem"><input type="checkbox" onchange="onUserCheckBoxChange(this,'+i+')"><span class="ml20">'+staticUsers[i].name+'</span></li>');
+        }
+    }
+
+    function onUserCheckBoxChange(e,key) {
+        var checked=$(e).is(":checked");
+        staticUsers[key].checked=checked;
+    }
+
+    function onAddClazzClick() {
+        $("#usersChosenModal").modal("show")
+    }
+
+    function addUserSubmitClick() {
+        var chson=[];
+        for(var i=0;i<staticUsers.length;i++){
+            if(staticUsers[i].checked){
+                chson.push(staticUsers[i].id);
+            }
+        }
+        $.ajax({
+            url:"/clazz/ajax/addUser",
+            type:"POST",
+            data:{userIds:chson,clazzId:${clazz.id}},
+            traditional:true,
+            success:function (data) {
+                if(data.result){
+                    location.reload()
+                }else {
+                    swal(data.message)
+                }
+            }
+        })
     }
 </script>
 </body>

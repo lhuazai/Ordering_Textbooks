@@ -308,7 +308,11 @@
             data:{roleId:chosenRoleId,userIds:chosen},
             traditional:true,
             success:function (data) {
-                console.log(data)
+                if(data.result){
+                    location.reload()
+                }else {
+                    swal(data.message)
+                }
             }
         })
     }

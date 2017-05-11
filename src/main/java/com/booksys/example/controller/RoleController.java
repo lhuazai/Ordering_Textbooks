@@ -29,6 +29,8 @@ public class RoleController {
     MenuRepository menuRepository;
     @Autowired
     RoleMenuRepository roleMenuRepository;
+    @Autowired
+    ClazzUserRepository clazzUserRepository;
 
     @RequestMapping("/userRolePage")
     public String getUserRolePage(Model model){
@@ -151,5 +153,22 @@ public class RoleController {
         }
         roleMenuRepository.deleteAllByRoleIdAndMenuId(roleId,menuId);
         return new ServiceRes("删除成功",true);
+    }
+
+    //获取没有加入班级的学生
+    @ResponseBody
+    @RequestMapping(value = "/ajax/getStudentsFree",method = RequestMethod.POST)
+    public ServiceRes getStudentsFree(){
+        List<UserroleEntity> userroleEntities=userRoleRepository.findAllByRoleId(3);
+        List<UserEntity> userEntities=new ArrayList<>();
+        for (int i = 0; i <userroleEntities.size() ; i++) {
+
+            List<ClazzUserEntity> clazzUserEntities=clazzUserRepository.findAllByUserId(userroleEntities.get(i).getUserId());
+            if(clazzUserEntities.size()==0){
+                UserEntity userEntity=userRepository.findOne(userroleEntities.get(i).getUserId());
+                userEntities.add(userEntity);
+            }
+        }
+        return new ServiceRes(userEntities,true,"获取成功");
     }
 }
