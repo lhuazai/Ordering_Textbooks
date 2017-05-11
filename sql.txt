@@ -56,6 +56,8 @@ CREATE TABLE `user_userrole` (
   CONSTRAINT `FKF32EE8B55DBD553C` FOREIGN KEY (`userroleEntities_id`) REFERENCES `userrole` (`id`),
   CONSTRAINT `FKF32EE8B587AC6BDD` FOREIGN KEY (`user_ID`) REFERENCES `user` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  
+
 
 
 CREATE TABLE `userrole` (
