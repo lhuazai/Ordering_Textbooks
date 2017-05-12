@@ -9,8 +9,8 @@ import javax.persistence.*;
 @Table(name = "courseBookStudent", schema = "book_system", catalog = "")
 public class CourseBookStudentEntity {
     private int id;
-    private int bookId;
-    private String userId;
+    private int userId;
+    private int courseBookId;
 
     @Id
     @Column(name = "Id")
@@ -23,23 +23,23 @@ public class CourseBookStudentEntity {
     }
 
     @Basic
-    @Column(name = "bookId")
-    public int getBookId() {
-        return bookId;
-    }
-
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
-    }
-
-    @Basic
     @Column(name = "userId")
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    @Basic
+    @Column(name = "courseBookId")
+    public int getCourseBookId() {
+        return courseBookId;
+    }
+
+    public void setCourseBookId(int courseBookId) {
+        this.courseBookId = courseBookId;
     }
 
     @Override
@@ -50,8 +50,8 @@ public class CourseBookStudentEntity {
         CourseBookStudentEntity that = (CourseBookStudentEntity) o;
 
         if (id != that.id) return false;
-        if (bookId != that.bookId) return false;
-        if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
+        if (userId != that.userId) return false;
+        if (courseBookId != that.courseBookId) return false;
 
         return true;
     }
@@ -59,8 +59,8 @@ public class CourseBookStudentEntity {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + bookId;
-        result = 31 * result + (userId != null ? userId.hashCode() : 0);
+        result = 31 * result + userId;
+        result = 31 * result + courseBookId;
         return result;
     }
 }

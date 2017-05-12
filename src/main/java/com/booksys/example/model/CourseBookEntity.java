@@ -12,6 +12,7 @@ public class CourseBookEntity {
     private int bookId;
     private int courseId;
     private BookEntity book;
+    private boolean isChosen;
 
     @Id
     @Column(name = "Id")
@@ -74,4 +75,12 @@ public class CourseBookEntity {
         this.book = book;
     }
 
+    @Transient
+    public boolean getIsChosen() {
+        return isChosen;
+    }
+
+    public void setIsChosen(boolean chosen) {
+        isChosen = chosen;
+    }
 }

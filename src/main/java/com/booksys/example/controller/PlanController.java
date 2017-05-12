@@ -2,10 +2,7 @@ package com.booksys.example.controller;
 
 import com.booksys.example.bean.ServiceRes;
 import com.booksys.example.model.*;
-import com.booksys.example.repository.BookRepository;
-import com.booksys.example.repository.CourseBookRepository;
-import com.booksys.example.repository.CourseRepository;
-import com.booksys.example.repository.PlanRepository;
+import com.booksys.example.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -32,7 +29,10 @@ public class PlanController {
     CourseBookRepository courseBookRepository;
     @Autowired
     BookRepository bookRepository;
-
+    @Autowired
+    UserRoleRepository userRoleRepository;
+    @Autowired
+    CourseBookStudentRepository courseBookStudentRepository;
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public String list(ModelMap modelMap){
@@ -103,15 +103,36 @@ public class PlanController {
     }
 
     @RequestMapping(value = "/course/books/{id}",method = RequestMethod.GET)
-    public String bookList(@PathVariable("id") Integer id,ModelMap modelMap){
+    public String bookList(@PathVariable("id") Integer id,ModelMap modelMap,HttpSession session){
+        UserEntity userEntity= (UserEntity) session.getAttribute("user");
+        List<UserroleEntity> userroleEntities=userRoleRepository.findAllByUserId(userEntity.getId());
+        boolean isStudent=false;
+        for (int i = 0; i <userroleEntities.size() ; i++) {
+            if(userroleEntities.get(i).getRoleId()==3){
+                isStudent=true;
+            }
+        }
+
+
         CourseEntity courseEntity=courseRepository.findOne(id);
         PlanEntity planEntity=planRepository.findOne(courseEntity.getPlanId());
         List<CourseBookEntity> courseBookEntities=courseBookRepository.findAllByCourseId(id);
         courseEntity.setCount(courseBookEntities.size());
+
+        List<CourseBookStudentEntity> courseBookStudentEntities = null;
         for (int i = 0; i <courseBookEntities.size() ; i++) {
             BookEntity bookEntity=bookRepository.findOne(courseBookEntities.get(i).getBookId());
             courseBookEntities.get(i).setBook(bookEntity);
+            if(isStudent){
+                courseBookStudentEntities=courseBookStudentRepository.findAllByCourseBookIdAndUserId(courseBookEntities.get(i).getId(),userEntity.getId());
+                if(isTheCourseBookBeUserChson(courseBookEntities,courseBookStudentEntities)){
+                    courseBookEntities.get(i).setIsChosen(true);
+                }else {
+                    courseBookEntities.get(i).setIsChosen(false);
+                }
+            }
         }
+        modelMap.addAttribute("isStudent",isStudent);
         modelMap.addAttribute("course",courseEntity);
         modelMap.addAttribute("courseBookList",courseBookEntities);
         modelMap.addAttribute("plan",planEntity);
@@ -136,10 +157,43 @@ public class PlanController {
         return new ServiceRes("添加成功",true);
     }
 
+    @RequestMapping(value = "/course/chooseBook/{id}",method = RequestMethod.GET)
+    public String chooseBook(@PathVariable("id") Integer id,HttpSession session){
+        UserEntity userEntity= (UserEntity) session.getAttribute("user");
+        CourseBookEntity courseBookEntity=courseBookRepository.findOne(id);
+        CourseBookStudentEntity courseBookStudentEntity=new CourseBookStudentEntity();
+        courseBookStudentEntity.setCourseBookId(id);
+        courseBookStudentEntity.setUserId(userEntity.getId());
+        courseBookStudentRepository.saveAndFlush(courseBookStudentEntity);
+        return "redirect:/plan/course/books/"+courseBookEntity.getCourseId();
+    }
+
+    @RequestMapping(value = "/course/unChooseBook/{id}",method = RequestMethod.GET)
+    public String unChooseBook(@PathVariable("id") Integer id,HttpSession session){
+        UserEntity userEntity= (UserEntity) session.getAttribute("user");
+        CourseBookEntity courseBookEntity=courseBookRepository.findOne(id);
+        CourseBookStudentEntity courseBookStudentEntity=new CourseBookStudentEntity();
+        courseBookStudentEntity.setCourseBookId(id);
+        courseBookStudentEntity.setUserId(userEntity.getId());
+        courseBookStudentRepository.deleteAllByCourseBookIdAndUserId(id,userEntity.getId());
+        return "redirect:/plan/course/books/"+courseBookEntity.getCourseId();
+    }
+
     private boolean isTheBookInList(List<CourseBookEntity> bookOrderEntities, int bookId) {
         for (int i = 0; i < bookOrderEntities.size(); i++) {
             if (bookId == bookOrderEntities.get(i).getBookId()) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isTheCourseBookBeUserChson(List<CourseBookEntity> courseBookEntities,List<CourseBookStudentEntity> courseBookStudentEntities){
+        for (int i = 0; i <courseBookEntities.size() ; i++) {
+            for (int j = 0; j <courseBookStudentEntities.size() ; j++) {
+                if(courseBookEntities.get(i).getId()==courseBookStudentEntities.get(j).getCourseBookId()){
+                    return true;
+                }
             }
         }
         return false;

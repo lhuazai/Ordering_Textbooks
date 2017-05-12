@@ -26,6 +26,11 @@
     <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        .c-gold{
+            color: gold;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -61,6 +66,9 @@
                     <td>￥<fmt:formatNumber type="number" value="${courseBook.book.price}"  pattern="#.00"/></td>
                     <td>
                         <a href="/clazz/user/del/${clazz.id}/${user.id}" type="button" class="btn btn-sm btn-danger">删除</a>
+                        <c:if test="${isStudent}">
+                            <a href="<c:if test="${false==courseBook.isChosen}">/plan/course/chooseBook/${courseBook.id}</c:if><c:if test="${true==courseBook.isChosen}">/plan/course/unChooseBook/${courseBook.id}</c:if>" style="font-size: 30px">
+                            <span class="c-gold glyphicon <c:if test="${false==courseBook.isChosen}">glyphicon-star-empty</c:if><c:if test="${true==courseBook.isChosen}">glyphicon-star</c:if>"></span></a></c:if>
                     </td>
                 </tr>
             </c:forEach>
