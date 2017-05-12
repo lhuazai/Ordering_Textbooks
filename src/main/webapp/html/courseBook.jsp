@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -28,13 +29,13 @@
 </head>
 <body>
 <div class="container">
-    <h1>订单教材管理</h1>
+    <h1>课程：${course.name}</h1>
+    <h2><i>所属计划：${plan.name}</i></h2>
     <hr/>
-    <h2>${order.name}</h2>
-    <h3>教材种类：${order.count}种<a href="javascript:onAddBookClick()" type="button" class="btn btn-default btn-sm">添加</a></h3>
+    <h3>教材种类：${course.count}种<a href="javascript:onAddBookClick()" type="button" class="btn btn-default btn-sm">添加</a></h3>
 
     <!-- 如果用户列表为空 -->
-    <c:if test="${empty bookOrderList}">
+    <c:if test="${empty courseBookList}">
         <p class="bg-warning">
             <br/>
             订单中暂无教材，请<a href="javascript:onAddBookClick()" type="button" class="btn btn-default btn-sm">添加</a>
@@ -44,7 +45,7 @@
     </c:if>
 
     <!-- 如果用户列表非空 -->
-    <c:if test="${!empty bookOrderList}">
+    <c:if test="${!empty courseBookList}">
         <table class="table table-bordered table-striped">
             <tr>
                 <th>ID</th>
@@ -53,11 +54,11 @@
                 <th>操作</th>
             </tr>
 
-            <c:forEach items="${bookOrderList}" var="bookOrder">
+            <c:forEach items="${courseBookList}" var="courseBook">
                 <tr>
-                    <td>${bookOrder.id}</td>
-                    <td>${bookOrder.bookEntity.name}</td>
-                    <td>${bookOrder.bookEntity.price}</td>
+                    <td>${courseBook.id}</td>
+                    <td>${courseBook.book.name}</td>
+                    <td>￥<fmt:formatNumber type="number" value="${courseBook.book.price}"  pattern="#.00"/></td>
                     <td>
                         <a href="/clazz/user/del/${clazz.id}/${user.id}" type="button" class="btn btn-sm btn-danger">删除</a>
                     </td>
@@ -141,9 +142,9 @@
             }
         }
         $.ajax({
-            url:"/order/ajax/addBook",
+            url:"/plan/ajax/addBook",
             type:"POST",
-            data:{bookIds:chson,orderId:${order.id}},
+            data:{bookIds:chson,courseId:${course.id}},
             traditional:true,
             success:function (data) {
                 if(data.result){

@@ -3,20 +3,19 @@ package com.booksys.example.model;
 import javax.persistence.*;
 
 /**
- * Created by Administrator on 2017/5/11.
+ * Created by zhangsc on 2017/5/12.
  */
 @Entity
-@Table(name = "order", schema = "book_system", catalog = "")
-public class OrderEntity {
+@Table(name = "plan", schema = "book_system", catalog = "")
+public class PlanEntity {
     private int id;
     private String name;
     private String buildTime;
     private int buildUserId;
-    private int inUse;
     private int count;
 
     @Id
-    @Column(name = "id")
+    @Column(name = "Id")
     public int getId() {
         return id;
     }
@@ -55,28 +54,17 @@ public class OrderEntity {
         this.buildUserId = buildUserId;
     }
 
-    @Basic
-    @Column(name = "inUse")
-    public int getInUse() {
-        return inUse;
-    }
-
-    public void setInUse(int inUse) {
-        this.inUse = inUse;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OrderEntity that = (OrderEntity) o;
+        PlanEntity that = (PlanEntity) o;
 
         if (id != that.id) return false;
-        if (inUse != that.inUse) return false;
+        if (buildUserId != that.buildUserId) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (buildTime != null ? !buildTime.equals(that.buildTime) : that.buildTime != null) return false;
-        if (buildUserId != that.buildUserId) return false;
 
         return true;
     }
@@ -87,10 +75,8 @@ public class OrderEntity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (buildTime != null ? buildTime.hashCode() : 0);
         result = 31 * result + buildUserId;
-        result = 31 * result + inUse;
         return result;
     }
-
 
     @Transient
     public int getCount() {

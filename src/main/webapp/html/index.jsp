@@ -85,7 +85,7 @@
                 <li role="presentation" data-url="/role/userRolePage" class="data-url"><a href="#/role/userRolePage">角色管理</a></li>
                 <li role="presentation" data-url="/book/list" class="data-url"><a href="#/book/list">教材管理</a></li>
                 <li role="presentation" data-url="/clazz/list" class="data-url"><a href="#/clazz/list">班级管理</a></li>
-                <li role="presentation" data-url="/order/list" class="data-url"><a href="#/order/list">订单管理</a></li>
+                <li role="presentation" data-url="/plan/list" class="data-url"><a href="#/plan/list">计划管理</a></li>
             </ul>
 
         </div>

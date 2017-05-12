@@ -14,7 +14,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>班级管理</title>
+    <title>授课计划</title>
 
     <!-- 新 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -28,39 +28,39 @@
 </head>
 <body>
 <div class="container">
-    <h1>订单管理</h1>
+    <h1>授课计划管理</h1>
     <hr/>
 
-    <h3>所有订单 <a href="javascript:onAddClazzClick()" type="button" class="btn btn-default btn-sm">添加</a></h3>
+    <h3>所有授课计划<a href="javascript:onAddClazzClick()" type="button" class="btn btn-default btn-sm">添加</a></h3>
 
     <!-- 如果用户列表为空 -->
-    <c:if test="${empty orderList}">
+    <c:if test="${empty planList}">
         <p class="bg-warning">
             <br/>
-            订单表为空，请<a href="/clazz/add" type="button" class="btn btn-default btn-sm">添加</a>
+            计划表为空，请<a href="javascript:onAddClazzClick()" type="button" class="btn btn-default btn-sm">添加</a>
             <br/>
             <br/>
         </p>
     </c:if>
 
     <!-- 如果用户列表非空 -->
-    <c:if test="${!empty orderList}">
+    <c:if test="${!empty planList}">
         <table class="table table-bordered table-striped">
             <tr>
                 <th>ID</th>
-                <th>订单名称</th>
-                <th>教材数</th>
+                <th>计划名称</th>
+                <th>课程数</th>
                 <th>操作</th>
             </tr>
 
-            <c:forEach items="${orderList}" var="order">
+            <c:forEach items="${planList}" var="plan">
                 <tr>
-                    <td>${order.id}</td>
-                    <td>${order.name}</td>
-                    <td>${order.count}</td>
+                    <td>${plan.id}</td>
+                    <td>${plan.name}</td>
+                    <td>${plan.count}</td>
                     <td>
-                        <a href="/order/del/${order.id}" type="button" class="btn btn-sm btn-danger">删除</a>
-                        <a href="/order/books/${order.id}" type="button" class="btn btn-sm btn-info">订单教材详情</a>
+                        <a href="/plan/del/${plan.id}" type="button" class="btn btn-sm btn-danger">删除</a>
+                        <a href="/plan/courses/${plan.id}" type="button" class="btn btn-sm btn-info">计划课程详情</a>
                     </td>
                 </tr>
             </c:forEach>
@@ -95,7 +95,7 @@
                     return false
                 }
                 $.ajax({
-                    url:"/order/add",
+                    url:"/plan/add",
                     type:"POST",
                     data:{name:inputValue},
                     success:function (data) {
