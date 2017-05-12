@@ -1,6 +1,7 @@
 package com.booksys.example.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by zhangsc on 2017/5/12.
@@ -12,6 +13,8 @@ public class CourseEntity {
     private int id;
     private int planId;
     private int count;
+    private boolean isUserChosen=false;
+    private List<CourseBookEntity> courseBookList;
 
     @Basic
     @Column(name = "name")
@@ -72,5 +75,15 @@ public class CourseEntity {
 
     public void setCount(int count) {
         this.count = count;
+    }
+
+
+    @Transient
+    public List<CourseBookEntity> getCourseBookList() {
+        return courseBookList;
+    }
+
+    public void setCourseBookList(List<CourseBookEntity> courseBookList) {
+        this.courseBookList = courseBookList;
     }
 }

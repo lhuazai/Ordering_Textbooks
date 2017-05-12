@@ -30,20 +30,27 @@
         .c-gold{
             color: gold;
         }
+        .c-gray{
+            color: gray;
+        }
+        #usersList{
+            max-height: 550px;
+            overflow: auto;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <h1>课程：${course.name}</h1>
-    <h2><i>所属计划：${plan.name}</i></h2>
+    <h2>所属计划：<i>${plan.name}</i></h2>
     <hr/>
-    <h3>教材种类：${course.count}种<a href="javascript:onAddBookClick()" type="button" class="btn btn-default btn-sm">添加</a></h3>
+    <h3>教材种类：${course.count}种<c:if test="${isTeacher&&(plan.active==1)}"><a href="javascript:onAddBookClick()" type="button" class="btn btn-default btn-sm">添加</a></c:if></h3>
 
     <!-- 如果用户列表为空 -->
     <c:if test="${empty courseBookList}">
         <p class="bg-warning">
             <br/>
-            订单中暂无教材，请<a href="javascript:onAddBookClick()" type="button" class="btn btn-default btn-sm">添加</a>
+            订单中暂无教材;<c:if test="${isTeacher&&(plan.active==1)}">请<a href="javascript:onAddBookClick()" type="button" class="btn btn-default btn-sm">添加</a></c:if>
             <br/>
             <br/>
         </p>
@@ -56,6 +63,7 @@
                 <th>ID</th>
                 <th>教材名称</th>
                 <th>教材单价</th>
+                <th>预定人数</th>
                 <th>操作</th>
             </tr>
 
@@ -64,11 +72,12 @@
                     <td>${courseBook.id}</td>
                     <td>${courseBook.book.name}</td>
                     <td>￥<fmt:formatNumber type="number" value="${courseBook.book.price}"  pattern="#.00"/></td>
+                    <td>${courseBook.count}</td>
                     <td>
-                        <a href="/clazz/user/del/${clazz.id}/${user.id}" type="button" class="btn btn-sm btn-danger">删除</a>
+                        <c:if test="${isTeachAdmin&&(plan.active==1)}"><a href="/clazz/user/del/${clazz.id}/${user.id}" type="button" class="btn btn-sm btn-danger">删除</a></c:if>
                         <c:if test="${isStudent}">
-                            <a href="<c:if test="${false==courseBook.isChosen}">/plan/course/chooseBook/${courseBook.id}</c:if><c:if test="${true==courseBook.isChosen}">/plan/course/unChooseBook/${courseBook.id}</c:if>" style="font-size: 30px">
-                            <span class="c-gold glyphicon <c:if test="${false==courseBook.isChosen}">glyphicon-star-empty</c:if><c:if test="${true==courseBook.isChosen}">glyphicon-star</c:if>"></span></a></c:if>
+                            <a href="<c:if test="${false==courseBook.isChosen&&(plan.active==1)}">/plan/course/chooseBook/${courseBook.id}</c:if><c:if test="${true==courseBook.isChosen&&(plan.active==1)}">/plan/course/unChooseBook/${courseBook.id}</c:if>" style="font-size: 30px">
+                            <span class="glyphicon <c:if test="${false==courseBook.isChosen}">glyphicon-star-empty c-gray</c:if><c:if test="${true==courseBook.isChosen}">glyphicon-star c-gold</c:if>"></span></a></c:if>
                     </td>
                 </tr>
             </c:forEach>

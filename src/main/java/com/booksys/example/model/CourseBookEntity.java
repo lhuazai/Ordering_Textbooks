@@ -13,6 +13,9 @@ public class CourseBookEntity {
     private int courseId;
     private BookEntity book;
     private boolean isChosen;
+    private boolean teacherAdd;
+    private int count;
+    private float totalPrice;
 
     @Id
     @Column(name = "Id")
@@ -82,5 +85,33 @@ public class CourseBookEntity {
 
     public void setIsChosen(boolean chosen) {
         isChosen = chosen;
+    }
+
+    @Transient
+    public boolean getTeacherAdd() {
+        return teacherAdd;
+    }
+
+    public void setTeacherAdd(boolean teacherAdd) {
+        this.teacherAdd = teacherAdd;
+    }
+
+
+    @Transient
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    @Transient
+    public float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(float totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

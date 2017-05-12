@@ -31,14 +31,14 @@
     <h1>计划课程管理</h1>
     <hr/>
     <h2>${plan.name}</h2>
-    <h3>课程数量：${plan.count}门<a href="javascript:onAddCourseClick()" type="button" class="btn btn-default btn-sm">添加</a>
+    <h3>课程数量：${plan.count}门<c:if test="${isTeachAdmin&&(plan.active==1)}"><a href="javascript:onAddCourseClick()" type="button" class="btn btn-default btn-sm">添加</a></c:if>
     </h3>
 
     <!-- 如果用户列表为空 -->
     <c:if test="${empty courseList}">
         <p class="bg-warning">
             <br/>
-            订单中暂无教材，请<a href="javascript:onAddCourseClick()" type="button" class="btn btn-default btn-sm">添加</a>
+            订单中暂无教材;<c:if test="${isTeachAdmin&&(plan.active==1)}">请<a href="javascript:onAddCourseClick()" type="button" class="btn btn-default btn-sm">添加</a></c:if>
             <br/>
             <br/>
         </p>
@@ -60,7 +60,7 @@
                     <td>${course.name}</td>
                     <td>${course.count}</td>
                     <td>
-                        <a href="/plan/course/del/${course.id}" type="button" class="btn btn-sm btn-danger">删除</a>
+                        <c:if test="${isTeachAdmin&&(plan.active==1)}"><a href="/plan/course/del/${course.id}" type="button" class="btn btn-sm btn-danger">删除</a></c:if>
                         <a href="/plan/course/books/${course.id}" type="button" class="btn btn-sm btn-info">课程教材列表</a>
                     </td>
                 </tr>

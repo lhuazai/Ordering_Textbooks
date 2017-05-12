@@ -14,6 +14,7 @@ import java.util.List;
  */
 public interface CourseBookStudentRepository extends JpaRepository<CourseBookStudentEntity,Integer> {
     List<CourseBookStudentEntity> findAllByCourseBookIdAndUserId(int courseBookId,int userId);
+    List<CourseBookStudentEntity> findAllByCourseBookId(int courseBookId);
     @Modifying
     @Transactional
     @Query("delete from CourseBookStudentEntity m where m.courseBookId=:qCourseBookId and m.userId=:quserId")

@@ -51,6 +51,9 @@
         .c-gold {
             color: gold;
         }
+        #usersList{
+            overflow: auto;
+        }
     </style>
 </head>
 <body>
@@ -64,7 +67,7 @@
         <div class="list-group">
             <c:forEach items="${roleList}" var="item">
                 <a href="javascript:void(0)" onclick="onRoleItemClick(${item.id})" class="list-group-item roleItem"
-                   role="presentation">${item.name}<span class="pull-right glyphicon glyphicon-remove"
+                   role="presentation" title="${item.intro}">${item.name}<span class="pull-right glyphicon glyphicon-remove"
                                                          onclick="onRoleItemDelClick(${item.id})"></span></a>
             </c:forEach>
         </div>
@@ -430,7 +433,15 @@
             data: {roleId: chosenRoleId, userIds: chosen},
             traditional: true,
             success: function (data) {
-                console.log(data)
+                if(data.result){
+                    getUserRoleWhithCurrentRoleId();
+                    $("#usersChosenModal").modal("hide");
+                }else {
+                    swal(data.message);
+                }
+            },
+            error:function () {
+                swal("服务错误")
             }
         })
     }
@@ -565,7 +576,8 @@
             success:function (data) {
                 removeLoadingLayer();
                 if(data.result){
-                    $("#menuList>a[key="+menuId+"]>div>span").removeClass("c-gray").addClass("c-gold").show();
+//                    $("#menuList>a[key="+menuId+"]>div>span").removeClass("c-gray").addClass("c-gold").show();
+                    getUserRoleWhithCurrentRoleId()
                 }else {
                     swal({
                         title:"警告",
@@ -593,7 +605,8 @@
             success:function (data) {
                 removeLoadingLayer();
                 if(data.result){
-                    $("#menuList>a[key="+menuId+"]>div>span").removeClass("c-gold").addClass("c-gray").show();
+//                    $("#menuList>a[key="+menuId+"]>div>span").removeClass("c-gold").addClass("c-gray").show();
+                    getUserRoleWhithCurrentRoleId()
                 }else {
                     swal({
                         title:"警告",

@@ -12,6 +12,7 @@ public class CourseBookStudentEntity {
     private int userId;
     private int courseBookId;
 
+
     @Id
     @Column(name = "Id")
     public int getId() {
@@ -63,4 +64,5 @@ public class CourseBookStudentEntity {
         result = 31 * result + courseBookId;
         return result;
     }
+
 }

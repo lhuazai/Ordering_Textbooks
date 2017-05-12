@@ -37,6 +37,10 @@
         .h-500{
             height: 400px;
         }
+        #usersList{
+            max-height: 550px;
+            overflow: auto;
+        }
     </style>
 </head>
 <body>

@@ -16,6 +16,7 @@ import java.util.List;
 public interface RoleMenuRepository extends JpaRepository<RolemenuEntity,Integer> {
     List<RolemenuEntity> findAllByRoleId(int roleId);
     List<RolemenuEntity> findAllByRoleIdAndMenuId(int roleId,int menuId);
+    List<RolemenuEntity> findDistinctByRoleIdIn(List<Integer> roleIds);
     @Modifying
     @Transactional
     @Query("delete from RolemenuEntity m where m.roleId=:qroleId and m.menuId=:qmenuId")

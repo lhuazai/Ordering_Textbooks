@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: sjj
@@ -65,10 +66,10 @@
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                       aria-expanded="false">你好，管理 <span class="caret"></span></a>
+                       aria-expanded="false">你好，${user.name} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="#">个人设置</a></li>
-                        <li><a href="#">更改密码</a></li>
+                        <li data-url="/showUser/${user.id}" class="data-url"><a href="#/showUser/${user.id}">个人资料</a></li>
+                        <%--<li><a href="#">更改密码</a></li>--%>
                         <li role="separator" class="divider"></li>
                         <li><a href="/userLoginout">退出登陆</a></li>
                     </ul>
@@ -81,11 +82,14 @@
     <div class="relative">
         <div class="nav-group">
             <ul class="nav nav-pills nav-stacked">
-                <li role="presentation" data-url="/users" class="active data-url"><a href="#/users">用户管理</a></li>
-                <li role="presentation" data-url="/role/userRolePage" class="data-url"><a href="#/role/userRolePage">角色管理</a></li>
-                <li role="presentation" data-url="/book/list" class="data-url"><a href="#/book/list">教材管理</a></li>
-                <li role="presentation" data-url="/clazz/list" class="data-url"><a href="#/clazz/list">班级管理</a></li>
-                <li role="presentation" data-url="/plan/list" class="data-url"><a href="#/plan/list">计划管理</a></li>
+                <c:forEach items="${menus}" var="menu">
+                    <li role="presentation" data-url="${menu.url}" class="data-url"><a href="#${menu.url}">${menu.name}</a></li>
+                </c:forEach>
+                <%--<li role="presentation" data-url="/users" class="active data-url"><a href="#/users">用户管理</a></li>--%>
+                <%--<li role="presentation" data-url="/role/userRolePage" class="data-url"><a href="#/role/userRolePage">角色管理</a></li>--%>
+                <%--<li role="presentation" data-url="/book/list" class="data-url"><a href="#/book/list">教材管理</a></li>--%>
+                <%--<li role="presentation" data-url="/clazz/list" class="data-url"><a href="#/clazz/list">班级管理</a></li>--%>
+                <%--<li role="presentation" data-url="/plan/list" class="data-url"><a href="#/plan/list">计划管理</a></li>--%>
             </ul>
 
         </div>
@@ -110,6 +114,7 @@
             var e=event.currentTarget;
             $('#main-iframe').attr("src",$(e).attr("data-url"))
         })
+        $('[role=presentation]').first().click();
     })
 
 </script>
