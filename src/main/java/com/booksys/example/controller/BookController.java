@@ -8,13 +8,12 @@ import com.booksys.example.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.awt.print.Book;
+import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -35,16 +34,27 @@ public class BookController {
 
     // 教材管理
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public String list(ModelMap modelMap){
+    public String list(@RequestParam(name = "word",required = false) String word, ModelMap modelMap,HttpServletRequest request){
+        try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         // 找到里面的所有记录
-        List<BookEntity> bookEntities=bookRepository.findAll();
+        List<BookEntity> bookEntities=null;
+        if(StringUtils.isEmpty(word)){
+            bookEntities=bookRepository.findAll();
+        }else {
+            bookEntities=bookRepository.findAllByNameLike("%"+word+"%");
+        }
+
         for (int i = 0; i <bookEntities.size() ; i++) {
             UserEntity userEntity=userRepository.findOne(bookEntities.get(i).getAddUserId());
             bookEntities.get(i).setUser(userEntity);
         }
         // 将所有的记录传递给返回的jsp页面
         modelMap.addAttribute("bookList", bookEntities);
-
+        modelMap.addAttribute("word",word);
         // 返回pages目录下的jsp
         return "bookList";
     }

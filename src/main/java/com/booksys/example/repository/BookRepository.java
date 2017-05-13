@@ -11,4 +11,5 @@ import java.util.List;
  * Created by Administrator on 2017/5/9.
  */
 public interface BookRepository extends JpaRepository<BookEntity,Integer>{
+    List<BookEntity> findAllByNameLike(String name);
 }
