@@ -60,6 +60,33 @@ public class BookController {
     }
 
     // 教材管理
+    @RequestMapping(value = "/list/search", method = RequestMethod.POST)
+    public String listSearch(@RequestParam(name = "word",required = false) String word, ModelMap modelMap,HttpServletRequest request){
+        try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        // 找到里面的所有记录
+        List<BookEntity> bookEntities=null;
+        if(StringUtils.isEmpty(word)){
+            bookEntities=bookRepository.findAll();
+        }else {
+            bookEntities=bookRepository.findAllByNameLike("%"+word+"%");
+        }
+
+        for (int i = 0; i <bookEntities.size() ; i++) {
+            UserEntity userEntity=userRepository.findOne(bookEntities.get(i).getAddUserId());
+            bookEntities.get(i).setUser(userEntity);
+        }
+        // 将所有的记录传递给返回的jsp页面
+        modelMap.addAttribute("bookList", bookEntities);
+        modelMap.addAttribute("word",word);
+        // 返回pages目录下的jsp
+        return "bookList";
+    }
+
+    // 教材管理
     @ResponseBody
     @RequestMapping(value = "/ajax/list", method = RequestMethod.POST)
     public ServiceRes ajaxList(){

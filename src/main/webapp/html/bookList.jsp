@@ -57,7 +57,7 @@
         <table class="table table-bordered table-striped">
             <tr>
             <td colspan="12">
-                    <form class="m5 pull-right" action="/book/list" method="get" accept-charset="UTF-8">
+                    <form class="m5 pull-right" action="/book/list/search" method="post" accept-charset="UTF-8">
                         <label for="searchBtn" class="h-34">关键字搜索</label>
                         <input type="text" class="form-control inline h-34 ml10" id="searchBtn" name="word" value="${word}" placeholder="输入课程关键字">
                         <button type="submit" class="btn btn-default list-inline h-34 ml10">搜索</button>
